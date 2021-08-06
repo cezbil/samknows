@@ -4,8 +4,16 @@
 namespace App\Input;
 
 
+/**
+ * Class InputFromArgs
+ *
+ * @package App\Input
+ */
 class InputFromArgs extends AbstractInput
 {
+    /**
+     * @var string
+     */
     protected $pathTofile;
 
     /**
@@ -19,6 +27,9 @@ class InputFromArgs extends AbstractInput
     }
 
 
+    /**
+     * @return string
+     */
     public function getFile(): string
     {
         if ($this->pathTofile) {
@@ -28,6 +39,10 @@ class InputFromArgs extends AbstractInput
         }
         return $contents;
     }
+
+    /**
+     * @return InputFileDecoded
+     */
     public function getRows(): InputFileDecoded
     {
         $input = json_decode($this->getFile());

@@ -4,9 +4,17 @@
 namespace App\Input;
 
 
+/**
+ * Class AbstractInput
+ *
+ * @package App\Input
+ */
 abstract class AbstractInput implements IInput
 {
 
+    /**
+     * @var string
+     */
     protected $pathToFile;
 
     /**
@@ -19,5 +27,8 @@ abstract class AbstractInput implements IInput
         $this->pathToFile = $pathToFile;
     }
 
+    /**
+     * @return string
+     */
     abstract public function getFile(): string;
 }

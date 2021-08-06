@@ -4,9 +4,20 @@
 namespace App\Input;
 
 
+/**
+ * Class InputRow
+ *
+ * @package App\Input
+ */
 class InputRow
 {
+    /**
+     * @var float
+     */
     private $metricValue;
+    /**
+     * @var string
+     */
     private $dtime;
 
     /**
