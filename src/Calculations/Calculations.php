@@ -9,53 +9,65 @@ use App\Input\InputRow;
 
 class Calculations extends AbstractCalculations
 {
+    use BpsToMbs;
+    /**
+     * @var  InputFileDecoded  $dataSet
+     */
+    private $dataSet;
 
+    /**
+     * AbstractCalculations constructor.
+     *
+     * @param  InputFileDecoded  $dataSet
+     */
+    public function __construct(InputFileDecoded $dataSet)
+    {
+        $this->dataSet = $dataSet;
+    }
     /**
      * @inheritDoc
      */
-    public function getMin(InputFileDecoded $dataSet): float
+    public function getMin(): float
     {
-        // TODO: Implement getMin() method.
+        return min($this->dataSet->getMetricValueRows());
     }
 
     /**
      * @inheritDoc
      */
-    public function getMax(InputFileDecoded $dataSet): float
+    public function getMax(): float
     {
-        // TODO: Implement getMax() method.
+        return max($this->dataSet->getMetricValueRows());
     }
 
     /**
      * @inheritDoc
      */
-    public function getMedian(InputFileDecoded $dataSet): float
+    public function getMedian(): float
     {
-        // TODO: Implement getMedian() method.
+        $rows = $this->dataSet->getMetricValueRows();
+        $count = count($rows);
+        sort($rows);
+        $middle = floor(($count-1)/2);
+
+        return round(($rows) ? ($rows[$middle] + $rows[$middle + 1 - $count % 2 ]) / 2 : 0, 2);
     }
 
     /**
      * @inheritDoc
      */
-    public function getAverage(InputFileDecoded $dataSet): float
+    public function getAverage(): float
     {
-        // TODO: Implement getAverage() method.
+        return round(array_sum($this->dataSet->getMetricValueRows()) / count($this->dataSet->getMetricValueRows()), 2);
     }
 
-    public function getInputInMegabitsPerSecond(InputFileDecoded $dataSet
-    ): InputFileDecoded {
+    public function getInputInMegabitsPerSecond(): InputFileDecoded {
         $rows = array_map(function(InputRow $row) {
             $mbps = $this->convertBpsToMbs($row);
             $row->setMetricValue($mbps);
             return $row;
-        }, $dataSet->getRows());
-        $dataSet->setRows($rows);
-        return $dataSet;
-    }
-
-    public function convertBpsToMbs(InputRow $row) : float
-    {
-        $bits = $row->getMetricValue() * 8;
-        return $bits / 1000000;
+        }, $this->dataSet->getRows());
+        $this->dataSet->setRows($rows);
+        return $this->dataSet;
     }
 }

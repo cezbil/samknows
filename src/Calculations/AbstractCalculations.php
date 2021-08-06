@@ -8,31 +8,30 @@ use App\Input\InputFileDecoded;
 
 abstract class AbstractCalculations implements ICalculations
 {
+    /**
+     * @inheritDoc
+     */
+    abstract public function getMin(): float;
 
     /**
      * @inheritDoc
      */
-    abstract public function getMin(InputFileDecoded $dataSet): float;
+    abstract public function getMax(): float;
 
     /**
      * @inheritDoc
      */
-    abstract public function getMax(InputFileDecoded $dataSet): float;
+    abstract public function getMedian(): float;
 
     /**
      * @inheritDoc
      */
-    abstract public function getMedian(InputFileDecoded $dataSet): float;
-
-    /**
-     * @inheritDoc
-     */
-    abstract public function getAverage(InputFileDecoded $dataSet): float;
+    abstract public function getAverage(): float;
 
     /**
      * @param  InputFileDecoded  $dataSet
      *
      * @return array
      */
-    abstract public function getInputInMegabitsPerSecond(InputFileDecoded $dataSet): InputFileDecoded;
+    abstract public function getInputInMegabitsPerSecond(): InputFileDecoded;
 }

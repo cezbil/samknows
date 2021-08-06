@@ -14,38 +14,28 @@ use App\Input\InputFileDecoded;
 interface ICalculations
 {
     /**
-     * @param  InputFileDecoded  $dataSet
-     *
      * @return float
      */
-    public function getMin(InputFileDecoded $dataSet) : float;
+    public function getMin() : float;
 
     /**
-     * @param  InputFileDecoded  $dataSet
-     *
      * @return float
      */
-    public function getMax(InputFileDecoded $dataSet) : float;
+    public function getMax() : float;
 
     /**
-     * @param  InputFileDecoded  $dataSet
-     *
      * @return float
      */
-    public function getMedian(InputFileDecoded $dataSet) : float;
+    public function getMedian() : float;
 
     /**
-     * @param  InputFileDecoded  $dataSet
-     *
      * @return float
      */
-    public function getAverage(InputFileDecoded $dataSet) : float;
+    public function getAverage() : float;
 
     /**
-     * @param  InputFileDecoded  $dataSet
-     *
-     * @return array
+     * @return InputFileDecoded
      */
-    public function getInputInMegabitsPerSecond(InputFileDecoded $dataSet) : InputFileDecoded;
+    public function getInputInMegabitsPerSecond() : InputFileDecoded;
 
 }
