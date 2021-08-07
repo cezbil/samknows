@@ -63,10 +63,10 @@ class Calculations extends AbstractCalculations
 
     public function getUnderPerforming(): array
     {
-        $average = $this->getAverage();
+        $belowAverage = $this->getAverage() * 0.5;
 
-        return array_filter($this->dataSet->getRows(), function(InputRow $row) use ($average){
-            return $this->convertBpsToMbs($row) < $average;
+        return array_filter($this->dataSet->getRows(), function(InputRow $row) use ($belowAverage){
+            return $this->convertBpsToMbs($row) < $belowAverage;
         });
     }
 
@@ -79,14 +79,17 @@ class Calculations extends AbstractCalculations
             'last' => $last,
         ];
     }
-    public function getUnderPerformingChecked(): array
+    public function getUnderPerformingChecked(): ?array
     {
-        $arrayReset = array_values($this->getUnderPerforming());
-        $first = $arrayReset[0]->getDtime();
-        $last = $arrayReset[count($arrayReset)-1]->getDtime();
-        return [
-            'first' => $first,
-            'last' => $last,
-        ];
+        if ($this->getUnderPerforming()) {
+            $arrayReset = array_values($this->getUnderPerforming());
+            $first = $arrayReset[0]->getDtime();
+            $last = $arrayReset[count($arrayReset)-1]->getDtime();
+            return [
+                'first' => $first,
+                'last' => $last,
+            ];
+        }
+        return null;
     }
 }

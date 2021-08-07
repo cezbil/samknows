@@ -138,7 +138,7 @@ class Output extends AbstractOutput
     /**
      * @return array
      */
-    public function getUnderPerforming(): array
+    public function getUnderPerforming(): ?array
     {
         return $this->underPerforming;
     }
@@ -199,7 +199,7 @@ class Output extends AbstractOutput
         $this->periodChecked = $periodChecked;
     }
 
-    public function printToConsole()
+    public function printToConsole(): void
     {
         $outputStyle = new OutputFormatterStyle('red', '#ff0', ['bold', 'blink']);
         $this->output->getFormatter()->setStyle('fire', $outputStyle);
@@ -219,12 +219,15 @@ class Output extends AbstractOutput
         $this->output->writeln('<comment>    Min: '.$this->getMin() . '</comment>');
         $this->output->writeln('<comment>    Max: '.$this->getMax() . '</comment>');
         $this->output->writeln('<comment>    Median: '.$this->getMedian() . '</comment>');
-        $this->output->writeln('');
-        $this->output->writeln('<info>Under-performing periods:</info>');
-        $this->output->writeln('');
-        $this->output->writeln('<fire>    * The period between ' . $this->getUnderPerforming()['first'] . ' and '. $this->getUnderPerforming()['last']. '</fire>');
-        $this->output->writeln('<fire>      was under-performing.</fire>');
-        $this->output->writeln('');
+        if ($this->getUnderPerforming()){
+            $this->output->writeln('');
+            $this->output->writeln('<info>Under-performing periods:</info>');
+            $this->output->writeln('');
+            $this->output->writeln('<fire>    * The period between ' . $this->getUnderPerforming()['first'] . ' and '. $this->getUnderPerforming()['last']. '</fire>');
+            $this->output->writeln('<fire>      was under-performing.</fire>');
+            $this->output->writeln('');
+        }
+
     }
     /**
      * @inheritDoc
@@ -247,12 +250,13 @@ class Output extends AbstractOutput
         $outputToPrint .= '    Min: ' . $this->getMin() . PHP_EOL;
         $outputToPrint .= '    Max: ' . $this->getMax() . PHP_EOL;
         $outputToPrint .= '    Median: ' . $this->getMedian() . PHP_EOL;
-        $outputToPrint .= PHP_EOL;
-        $outputToPrint .= 'Under-performing periods:' . PHP_EOL;
-        $outputToPrint .= PHP_EOL;
-        $outputToPrint .= '    * The period between ' . $this->getUnderPerforming()['first'] . ' and '. $this->getUnderPerforming()['last'] . PHP_EOL;
-        $outputToPrint .= '      was under-performing.' . PHP_EOL;
-
+        if ($this->getUnderPerforming()){
+            $outputToPrint .= PHP_EOL;
+            $outputToPrint .= 'Under-performing periods:' . PHP_EOL;
+            $outputToPrint .= PHP_EOL;
+            $outputToPrint .= '    * The period between ' . $this->getUnderPerforming()['first'] . ' and '. $this->getUnderPerforming()['last'] . PHP_EOL;
+            $outputToPrint .= '      was under-performing.' . PHP_EOL;
+        }
 
         if (realpath(self::OUTPUT_PATH)){
             file_put_contents(self::OUTPUT_PATH . rand(1, 99999) . '.output',$outputToPrint);

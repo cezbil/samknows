@@ -45,18 +45,10 @@ class AppAnalyseMetricsCommand extends Command
         $pathToFile = $input->getOption('input');
         $inputFromArgs = new InputFromArgs($pathToFile);
         $contents = $inputFromArgs->getRows();
-        $dtime = $contents->getDTimeRows();
-        $metricValue = $contents->getMetricValueRows();
         $calc = new Calculations($contents);
-        $min = $calc->getMin();
-        $max = $calc->getMax();
-        $average = $calc->getAverage();
-        $median = $calc->getMedian();
-        $underP = $calc->getUnderPerforming();
-        $outputx = new Output($calc, $output);
-        $outputx->printToConsole();
-        $outputx->printToFile();
-//        $bits = $calc->getInputInMegabitsPerSecond();
+        $outputToPrint = new Output($calc, $output);
+        $outputToPrint->printToConsole();
+        $outputToPrint->printToFile();
         return Command::SUCCESS;
     }
 }
