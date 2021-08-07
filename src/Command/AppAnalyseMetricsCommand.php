@@ -37,18 +37,30 @@ class AppAnalyseMetricsCommand extends Command
     /**
      * Detect slow-downs in the data and output them to stdout.
      *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
+     * @param  InputInterface  $input
+     * @param  OutputInterface  $output
+     *
+     * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $pathToFile = $input->getOption('input');
-        $inputFromArgs = new InputFromArgs($pathToFile);
-        $contents = $inputFromArgs->getRows();
-        $calc = new Calculations($contents);
+        $calc = $this->initCommand($input);
         $outputToPrint = new Output($calc, $output);
         $outputToPrint->printToConsole();
         $outputToPrint->printToFile();
         return Command::SUCCESS;
+    }
+
+    /**
+     * @param  InputInterface  $input
+     *
+     * @return Calculations
+     */
+    protected function initCommand(InputInterface $input)
+    {
+        $pathToFile = $input->getOption('input');
+        $inputFromArgs = new InputFromArgs($pathToFile);
+        $contents = $inputFromArgs->getRows();
+        return new Calculations($contents);
     }
 }
