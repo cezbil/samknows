@@ -203,18 +203,28 @@ class Output extends AbstractOutput
     {
         $outputStyle = new OutputFormatterStyle('red', '#ff0', ['bold', 'blink']);
         $this->output->getFormatter()->setStyle('fire', $outputStyle);
-        $this->output->writeln('<info>Period checked::</info>');
-        $this->output->writeln('<info>From: ' . $this->getPeriodChecked()['first']);
-        $this->output->writeln('<info>To: ' . $this->getPeriodChecked()['last']);
+        $this->output->writeln('<info>SamKnows Metric Analyser v1.0.0</info>');
+        $this->output->writeln('<info>===============================</info>');
+        $this->output->writeln('');
+        $this->output->writeln('<info>Period checked:</info>');
+        $this->output->writeln('');
+        $this->output->writeln('<info>    From: ' . $this->getPeriodChecked()['first']);
+        $this->output->writeln('<info>    To:   ' . $this->getPeriodChecked()['last']);
+        $this->output->writeln('');
         $this->output->writeln('<info>Statistics:</info>');
-        $this->output->writeln('<info>Unit: Megabits per second</info>');
-        $this->output->writeln('<comment>Average: '.$this->getAverage() . '</comment>');
-        $this->output->writeln('<comment>Min: '.$this->getMin() . '</comment>');
-        $this->output->writeln('<comment>Max: '.$this->getMax() . '</comment>');
-        $this->output->writeln('<comment>Median: '.$this->getMedian() . '</comment>');
+        $this->output->writeln('');
+        $this->output->writeln('<info>    Unit: Megabits per second</info>');
+        $this->output->writeln('');
+        $this->output->writeln('<comment>    Average: '.$this->getAverage() . '</comment>');
+        $this->output->writeln('<comment>    Min: '.$this->getMin() . '</comment>');
+        $this->output->writeln('<comment>    Max: '.$this->getMax() . '</comment>');
+        $this->output->writeln('<comment>    Median: '.$this->getMedian() . '</comment>');
+        $this->output->writeln('');
         $this->output->writeln('<info>Under-performing periods:</info>');
-        $this->output->writeln('<fire>* The period between ' . $this->getUnderPerforming()['first'] . ' and '. $this->getUnderPerforming()['last'] . ' was under-performing.</fire>');
-
+        $this->output->writeln('');
+        $this->output->writeln('<fire>    * The period between ' . $this->getUnderPerforming()['first'] . ' and '. $this->getUnderPerforming()['last']. '</fire>');
+        $this->output->writeln('<fire>      was under-performing.</fire>');
+        $this->output->writeln('');
     }
     /**
      * @inheritDoc
@@ -247,7 +257,6 @@ class Output extends AbstractOutput
         if (realpath(self::OUTPUT_PATH)){
             file_put_contents(self::OUTPUT_PATH . rand(1, 99999) . '.output',$outputToPrint);
         }
-        // TODO: Implement printToFile() method.
     }
 
 }
