@@ -27,11 +27,4 @@ abstract class AbstractCalculations implements ICalculations
      * @inheritDoc
      */
     abstract public function getAverage(): float;
-
-    /**
-     * @param  InputFileDecoded  $dataSet
-     *
-     * @return array
-     */
-    abstract public function getInputInMegabitsPerSecond(): InputFileDecoded;
 }

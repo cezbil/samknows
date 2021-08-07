@@ -60,14 +60,4 @@ class Calculations extends AbstractCalculations
     {
         return round(array_sum($this->dataSet->getMetricValueRows()) / count($this->dataSet->getMetricValueRows()), 2);
     }
-
-    public function getInputInMegabitsPerSecond(): InputFileDecoded {
-        $rows = array_map(function(InputRow $row) {
-            $mbps = $this->convertBpsToMbs($row);
-            $row->setMetricValue($mbps);
-            return $row;
-        }, $this->dataSet->getRows());
-        $this->dataSet->setRows($rows);
-        return $this->dataSet;
-    }
 }

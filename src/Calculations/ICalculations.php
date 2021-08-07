@@ -33,9 +33,4 @@ interface ICalculations
      */
     public function getAverage() : float;
 
-    /**
-     * @return InputFileDecoded
-     */
-    public function getInputInMegabitsPerSecond() : InputFileDecoded;
-
 }
