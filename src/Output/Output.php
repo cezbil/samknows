@@ -15,6 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class Output extends AbstractOutput
 {
+    const OUTPUT_PATH = __DIR__ . '/../../Resources/Fixtures/outputs/';
     /**
      * @var float
      */
@@ -183,11 +184,19 @@ class Output extends AbstractOutput
     }
 
     /**
-     * @inheritDoc
+     * @return array
      */
-    public function printToFile(): string
+    public function getPeriodChecked(): array
     {
-        // TODO: Implement printToFile() method.
+        return $this->periodChecked;
+    }
+
+    /**
+     * @param  array  $periodChecked
+     */
+    public function setPeriodChecked(array $periodChecked): void
+    {
+        $this->periodChecked = $periodChecked;
     }
 
     public function printToConsole()
@@ -207,21 +216,38 @@ class Output extends AbstractOutput
         $this->output->writeln('<fire>* The period between ' . $this->getUnderPerforming()['first'] . ' and '. $this->getUnderPerforming()['last'] . ' was under-performing.</fire>');
 
     }
-
     /**
-     * @return array
+     * @inheritDoc
      */
-    public function getPeriodChecked(): array
+    public function printToFile(): void
     {
-        return $this->periodChecked;
-    }
+        $outputToPrint = 'SamKnows Metric Analyser v1.0.0' . PHP_EOL;
+        $outputToPrint .= '===============================' . PHP_EOL;
+        $outputToPrint .= PHP_EOL;
+        $outputToPrint .= 'Period checked:' . PHP_EOL;
+        $outputToPrint .= PHP_EOL;
+        $outputToPrint .= '    From: ' . $this->getPeriodChecked()['first'] . PHP_EOL;
+        $outputToPrint .= '    To:   ' . $this->getPeriodChecked()['last'] . PHP_EOL;
+        $outputToPrint .= PHP_EOL;
+        $outputToPrint .= 'Statistics:' . PHP_EOL;
+        $outputToPrint .= PHP_EOL;
+        $outputToPrint .= '    Unit: Megabits per second' . PHP_EOL;
+        $outputToPrint .= PHP_EOL;
+        $outputToPrint .= '    Average: ' . $this->getAverage() . PHP_EOL;
+        $outputToPrint .= '    Min: ' . $this->getMin() . PHP_EOL;
+        $outputToPrint .= '    Max: ' . $this->getMax() . PHP_EOL;
+        $outputToPrint .= '    Median: ' . $this->getMedian() . PHP_EOL;
+        $outputToPrint .= PHP_EOL;
+        $outputToPrint .= 'Under-performing periods:' . PHP_EOL;
+        $outputToPrint .= PHP_EOL;
+        $outputToPrint .= '    * The period between ' . $this->getUnderPerforming()['first'] . ' and '. $this->getUnderPerforming()['last'] . PHP_EOL;
+        $outputToPrint .= '      was under-performing.' . PHP_EOL;
 
-    /**
-     * @param  array  $periodChecked
-     */
-    public function setPeriodChecked(array $periodChecked): void
-    {
-        $this->periodChecked = $periodChecked;
+
+        if (realpath(self::OUTPUT_PATH)){
+            file_put_contents(self::OUTPUT_PATH . rand(1, 99999) . '.output',$outputToPrint);
+        }
+        // TODO: Implement printToFile() method.
     }
 
 }

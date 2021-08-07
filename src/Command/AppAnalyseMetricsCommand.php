@@ -55,6 +55,7 @@ class AppAnalyseMetricsCommand extends Command
         $underP = $calc->getUnderPerforming();
         $outputx = new Output($calc, $output);
         $outputx->printToConsole();
+        $outputx->printToFile();
 //        $bits = $calc->getInputInMegabitsPerSecond();
         return Command::SUCCESS;
     }

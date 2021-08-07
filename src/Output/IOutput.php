@@ -14,7 +14,7 @@ interface IOutput
     /**
      * @return string
      */
-    public function printToFile() : string;
+    public function printToFile() : void;
 
     /**
      * @return string
