@@ -6,6 +6,7 @@ namespace App\Command;
 
 use App\Calculations\Calculations;
 use App\Input\InputFromArgs;
+use App\Output\Output;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -28,6 +29,7 @@ class AppAnalyseMetricsCommand extends Command
      */
     protected function configure(): void
     {
+
         $this->setDescription('Analyses the metrics to generate a report.');
         $this->addOption('input', null, InputOption::VALUE_REQUIRED, 'The location of the test input');
     }
@@ -50,6 +52,9 @@ class AppAnalyseMetricsCommand extends Command
         $max = $calc->getMax();
         $average = $calc->getAverage();
         $median = $calc->getMedian();
+        $underP = $calc->getUnderPerforming();
+        $outputx = new Output($calc, $output);
+        $outputx->printToConsole();
 //        $bits = $calc->getInputInMegabitsPerSecond();
         return Command::SUCCESS;
     }

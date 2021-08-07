@@ -60,4 +60,33 @@ class Calculations extends AbstractCalculations
     {
         return round(array_sum($this->dataSet->getMetricValueRows()) / count($this->dataSet->getMetricValueRows()), 2);
     }
+
+    public function getUnderPerforming(): array
+    {
+        $average = $this->getAverage();
+
+        return array_filter($this->dataSet->getRows(), function(InputRow $row) use ($average){
+            return $this->convertBpsToMbs($row) < $average;
+        });
+    }
+
+    public function getPeriodChecked(): array
+    {
+        $first = $this->dataSet->getRows()[0]->getDtime();
+        $last = $this->dataSet->getRows()[count($this->dataSet->getRows())-1]->getDtime();
+        return [
+            'first' => $first,
+            'last' => $last,
+        ];
+    }
+    public function getUnderPerformingChecked(): array
+    {
+        $arrayReset = array_values($this->getUnderPerforming());
+        $first = $arrayReset[0]->getDtime();
+        $last = $arrayReset[count($arrayReset)-1]->getDtime();
+        return [
+            'first' => $first,
+            'last' => $last,
+        ];
+    }
 }

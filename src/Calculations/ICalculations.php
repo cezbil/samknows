@@ -3,9 +3,6 @@
 
 namespace App\Calculations;
 
-
-use App\Input\InputFileDecoded;
-
 /**
  * Interface ICalculations
  *
@@ -32,5 +29,9 @@ interface ICalculations
      * @return float
      */
     public function getAverage() : float;
+    /**
+     * @return array
+     */
+    public function getUnderPerforming() : array;
 
 }

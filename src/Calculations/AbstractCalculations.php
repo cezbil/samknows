@@ -27,4 +27,9 @@ abstract class AbstractCalculations implements ICalculations
      * @inheritDoc
      */
     abstract public function getAverage(): float;
+
+    /**
+     * @inheritDoc
+     */
+    abstract public function getUnderPerforming(): array;
 }
